@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مركز الربيع | لوحة التحكم - الاستقبال</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(145deg,#08baff,#0054b4);color:#fff;min-height:100vh;padding:20px}
+.container{max-width:900px;margin:auto}
+.glass{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+h1,h2{margin-top:0;color:#e6faff}
+table{width:100%;border-collapse:collapse;margin-top:15px;color:#fff}
+th,td{padding:12px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.2)}
+th{background:rgba(0,0,0,0.2);color:#8ef5ff}
+.btn{padding:8px 16px;border-radius:10px;border:none;background:#27ae60;color:white;cursor:pointer;font-weight:bold}
+.btn-refresh{background:#00c6ff;margin-bottom:15px}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="glass">
+        <h1>👩‍💼 شاشة الاستقبال والسكرتارية</h1>
+        <p>إدارة طلبات التسجيل الجدد والمواعيد اليومية</p>
+        <button class="btn btn-refresh" onclick="loadChildren()">تحديث البيانات 🔄</button>
+    </div>
+
+    <div class="glass">
+        <h2>قائمة الأطفال المسجلين بالمركز</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>اسم الطفل</th>
+                    <th>تاريخ الميلاد / السن</th>
+                    <th>بيانات الجلسة والتواصل</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="childrenTable">
+                <tr><td colspan="5" style="text-align:center">جاري تحميل البيانات من قاعدة البيانات...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+async function loadChildren() {
+    try {
+        const response = await fetch('http://localhost:5000/api/children');
+        const data = await response.json();
+        const tbody = document.getElementById('childrenTable');
+        tbody.innerHTML = '';
+
+        if(data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">لا يوجد أطفال مسجلون حتى الآن</td></tr>';
+            return;
+        }
+
+        data.forEach(child => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${child.id}</td>
+                <td><strong>${child.full_name || 'غير محدد'}</strong><br><small style="color:#c9f2ff">ولي الأمر: ${child.parent_name || '-'}</small></td>
+                <td>${child.age ? child.age + ' سنوات' : (child.date_of_birth || '-')}</td>
+                <td>${child.medical_history || 'لا يوجد'}</td>
+                <td><button class="btn" onclick="alert('تم تأكيد حضور الطفل: ${child.full_name}')">تأكيد حضور 🎯</button></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (err) {
+        alert('خطأ في الاتصال بالخادم! تأكد أن node server.js يعمل.');
+    }
+}
+window.onload = loadChildren;
+</script>
+</body>
+</html>

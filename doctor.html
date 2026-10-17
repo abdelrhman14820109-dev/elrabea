@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مركز الربيع | لوحة الطبيب الأخصائي</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(145deg,#087ad8,#003a80);color:#fff;min-height:100vh;padding:20px}
+.container{max-width:900px;margin:auto}
+.glass{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:20px;margin-bottom:20px}
+.patient-card{background:rgba(255,255,255,0.1);border-radius:15px;padding:15px;margin-bottom:15px;border-right:5px solid #28dcff}
+.btn-notes{background:#00a9a6;color:white;border:none;padding:8px 15px;border-radius:10px;cursor:pointer;font-weight:bold;margin-top:10px}
+textarea{width:100%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:white;border-radius:10px;padding:10px;margin-top:10px;outline:none}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="glass">
+        <h1>👨‍⚕️ لوحة التحكم الخاصة بالطبيب / الأخصائي</h1>
+        <p>استعراض الحالات اليومية وتدوين الملاحظات والتقارير الطبية</p>
+    </div>
+
+    <div class="glass">
+        <h2>جدول حالات اليوم</h2>
+        <div id="doctorList">جاري جلب القائمة...</div>
+    </div>
+</div>
+
+<script>
+async function loadDoctorPatients() {
+    try {
+        const response = await fetch('http://localhost:5000/api/children');
+        const data = await response.json();
+        const container = document.getElementById('doctorList');
+        container.innerHTML = '';
+
+        if(data.length === 0) {
+            container.innerHTML = '<p>لا توجد حالات محولة اليوم.</p>';
+            return;
+        }
+
+        data.forEach(child => {
+            const card = document.createElement('div');
+            card.className = 'patient-card';
+            card.innerHTML = `
+                <h3>اسم الطفل: ${child.full_name}</h3>
+                <p>تفاصيل الجلسة: ${child.medical_history}</p>
+                <textarea id="note_${child.id}" placeholder="اكتب التقرير الطبي أو ملاحظات الجلسة هنا..."></textarea>
+                <button class="btn-notes" onclick="saveNote(${child.id})">حفظ التقرير الطبي 📝</button>
+            `;
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function saveNote(id) {
+    const val = document.getElementById('note_' + id).value;
+    if(!val) return alert('يرجى كتابة ملاحظة أولاً');
+    alert('تم حفظ التقرير الطبي للطفل بنجاح في النظام!');
+}
+
+window.onload = loadDoctorPatients;
+</script>
+</body>
+</html>

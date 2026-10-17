@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0879d5">
+<title>مركز الربيع | فواتيري</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Tahoma,Arial,sans-serif;color:#fff}
+body{min-height:100svh;background:radial-gradient(ellipse at 60% 22%,#55c6ff 0,transparent 38%),radial-gradient(ellipse at 0 85%,#0062c5 0,transparent 48%),linear-gradient(145deg,#08baff,#087ad8 43%,#0054b4 75%,#0a8ce6);overflow-x:hidden}
+.page{width:min(100%,680px);margin:auto;padding:25px 20px 24px}
+.header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.back-btn{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;color:#fff;font-size:24px;text-decoration:none;cursor:pointer}
+.page-title{font-size:28px;font-weight:900;display:flex;align-items:center;gap:10px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.tab{padding:14px;text-align:center;border-radius:25px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);font-weight:bold;cursor:pointer;font-size:16px}
+.tab.active{background:linear-gradient(135deg,#00b4db,#0083b0);border-color:#fff}
+.glass{background:linear-gradient(135deg,rgba(135,219,255,.4),rgba(13,116,215,.4));border:1px solid rgba(255,255,255,.66);border-radius:25px;box-shadow:0 12px 25px rgba(0,40,110,.16);backdrop-filter:blur(10px);padding:20px;margin-bottom:15px}
+.invoice-card{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px}
+.invoice-info div{margin-bottom:6px;font-size:15px}
+.invoice-info strong{color:#e6faff}
+.badge{padding:6px 14px;border-radius:15px;font-size:13px;font-weight:bold;display:inline-block;margin-bottom:10px}
+.badge.pending{background:rgba(255, 99, 71, 0.4);border:1px solid rgba(255,99,71,0.8)}
+.badge.paid{background:rgba(46, 204, 113, 0.4);border:1px solid rgba(46,204,113,0.8)}
+.btn-action{width:100%;padding:12px;border-radius:15px;border:none;font-weight:bold;font-size:15px;cursor:pointer;margin-top:8px}
+.btn-pay{background:linear-gradient(135deg,#00c6ff,#0072ff);color:white}
+.btn-details{background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.4)}
+</style>
+</head>
+<body>
+<main class="page">
+    <div class="header-row">
+        <a href="index-home.html" class="back-btn">‹</a>
+        <div class="page-title"><span>📋</span> فواتيري</div>
+        <div style="width:50px"></div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active">مطوبة للتسديد</div>
+        <div class="tab">المدفوعة</div>
+    </div>
+
+    <!-- الفاتورة الأولى -->
+    <div class="glass">
+        <div class="invoice-card">
+            <div>
+                <span class="badge pending">مطلوبة للتسديد ⏳</span>
+                <h3 style="margin:0 0 10px 0;font-size:20px;">فاتورة رقم #1047</h3>
+            </div>
+        </div>
+        <div class="invoice-info">
+            <div>تاريخ الإصدار: <strong>2025/09/28</strong></div>
+            <div>اسم المريض: <strong>أحمد محمد</strong></div>
+            <div>تفاصيل الخدمة: <strong>جلسات علاج طبيعي</strong></div>
+            <div>المبلغ الإجمالي: <strong style="font-size:18px;color:#fff;">2,400 ج.م</strong></div>
+        </div>
+        <button class="btn-action btn-pay" onclick="alert('تم توجيهك لبوابة الدفع الإلكتروني')">دفع الفاتورة 💳</button>
+        <button class="btn-action btn-details" onclick="alert('تفاصيل الفاتورة كاملة')">عرض التفاصيل</button>
+    </div>
+
+    <!-- الفاتورة الثانية -->
+    <div class="glass">
+        <div class="invoice-card">
+            <div>
+                <span class="badge paid">تم الدفع ✓</span>
+                <h3 style="margin:0 0 10px 0;font-size:20px;">فاتورة رقم #1023</h3>
+            </div>
+        </div>
+        <div class="invoice-info">
+            <div>تاريخ الإصدار: <strong>2025/09/10</strong></div>
+            <div>اسم المريض: <strong>ليلى محمد</strong></div>
+            <div>تفاصيل الخدمة: <strong>جلسات تأهيل أطفال</strong></div>
+            <div>المبلغ الإجمالي: <strong style="font-size:18px;color:#fff;">1,800 ج.م</strong></div>
+        </div>
+        <button class="btn-action btn-details" onclick="alert('هذه الفاتورة مسددة بالكامل')">عرض التفاصيل</button>
+    </div>
+</main>
+</body>
+</html>
